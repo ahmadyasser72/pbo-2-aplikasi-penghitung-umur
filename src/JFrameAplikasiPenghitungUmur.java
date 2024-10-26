@@ -1,8 +1,14 @@
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 
 /*
@@ -20,6 +26,7 @@ public class JFrameAplikasiPenghitungUmur extends javax.swing.JFrame {
      */
     public JFrameAplikasiPenghitungUmur() {
         initComponents();
+        this.setLocationRelativeTo(null); // center window 
     }
 
     /**
@@ -35,18 +42,24 @@ public class JFrameAplikasiPenghitungUmur extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(600, 200));
+        setPreferredSize(new java.awt.Dimension(600, 200));
+        setResizable(false);
 
         java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
-        jPanel1Layout.columnWidths = new int[] {150, 60, 60, 60};
+        jPanel1Layout.columnWidths = new int[] {150, 60, 60, 60, 150};
         jPanel1.setLayout(jPanel1Layout);
 
         jDateChooser1.setDate(new Date());
@@ -60,7 +73,7 @@ public class JFrameAplikasiPenghitungUmur extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         jPanel1.add(jDateChooser1, gridBagConstraints);
@@ -74,10 +87,23 @@ public class JFrameAplikasiPenghitungUmur extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         jPanel1.add(jButton1, gridBagConstraints);
+
+        jButton2.setText("Fetch event");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        jPanel1.add(jButton2, gridBagConstraints);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -88,7 +114,7 @@ public class JFrameAplikasiPenghitungUmur extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         jPanel1.add(jLabel1, gridBagConstraints);
@@ -121,6 +147,14 @@ public class JFrameAplikasiPenghitungUmur extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         jPanel1.add(jLabel4, gridBagConstraints);
 
+        jLabel5.setText("Ulang tahun selanjutnya");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        jPanel1.add(jLabel5, gridBagConstraints);
+
         jTextField1.setEditable(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -146,31 +180,86 @@ public class JFrameAplikasiPenghitungUmur extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         jPanel1.add(jTextField3, gridBagConstraints);
 
+        jDateChooser2.setDateFormatString("dd/MM/yyyy");
+        jDateChooser2.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        jPanel1.add(jDateChooser2, gridBagConstraints);
+
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void calculateAge() {
-        var selected = jDateChooser1
-                .getDate()
-                .toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
-        
+        var selected = this.getSelectedDate();
         var diff = Period.between(selected, LocalDate.now());
         jTextField1.setText((String.valueOf(diff.getYears())));
         jTextField2.setText((String.valueOf(diff.getMonths())));
         jTextField3.setText((String.valueOf(diff.getDays())));
     }
 
+    private void calculateNextBirthday() {
+        var today = LocalDate.now();
+        var birthdayDate = this.getSelectedDate();
+        var nextBirthdayDate = birthdayDate.withYear(today.getYear());
+        if (nextBirthdayDate.isBefore(today) || nextBirthdayDate.isEqual(today)) {
+            nextBirthdayDate = nextBirthdayDate.plusYears(1);
+        }
+
+        jDateChooser2
+                .setDate(
+                        Date.from(
+                                nextBirthdayDate.atStartOfDay(
+                                        ZoneId.systemDefault())
+                                        .toInstant()));
+    }
+
+    private LocalDate getSelectedDate() {
+        return jDateChooser1
+                .getDate()
+                .toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+    }
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.calculateAge();
+        this.calculateNextBirthday();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jDateChooser1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooser1PropertyChange
         this.calculateAge();
+        this.calculateNextBirthday();
     }//GEN-LAST:event_jDateChooser1PropertyChange
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        var birthdayDate = this.getSelectedDate();
+        var bulan = birthdayDate.getMonthValue();
+        var tanggal = birthdayDate.getDayOfMonth();
+        var urlString = "http://numbersapi.com/%d/%d/date".formatted(bulan, tanggal);
+
+        var result = new StringBuilder();
+        try {
+            var url = URI.create(urlString).toURL();
+            var conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+            }
+        } catch (IOException ex) {
+            result.append("Error fetching events: ").append(ex.getMessage());
+        }
+
+        JOptionPane.showMessageDialog(this, result.toString(), "kejadian penting", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,11 +298,14 @@ public class JFrameAplikasiPenghitungUmur extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
